@@ -1,7 +1,20 @@
 use gif::{Encoder, Frame, Repeat};
 use std::borrow::Cow;
 use std::fs::File;
+use rand::Rng;
 mod neighborhoods;
+
+const WIDTH : u16 = 500;
+const HEIGHT: u16 = 500;
+const PIXELS : usize = (WIDTH as usize) * (HEIGHT as usize);
+
+fn real_to_int_map(val: f64) -> u8{
+    if val > 0.5 {
+        1
+    } else {
+        0
+    }
+}
 
 fn main() {
     /*
@@ -22,20 +35,28 @@ fn main() {
         0, 0, 0,
         0, 0, 0
     ];
-    
-    const WIDTH : u16 = 1920;
-    const HEIGHT: u16 = 1080;
-    const PIXELS : usize = (WIDTH as usize) * (HEIGHT as usize);
 
-    let mut beacon_states = Vec::new();
-    let mut count = 0;
+    let mut frames = Vec::new();
+    let mut rng = rand::thread_rng();
+
+    //initialize the states to something random
+    let mut cellular_state: [f64; PIXELS] = [0.0; PIXELS];
+
+    for i in 0..PIXELS {
+        cellular_state[i] = rng.gen();
+    }
+
     for _ in 1..10 {
-        let mut arr: [u8; PIXELS] = [0; PIXELS];
+        //simulate
         for i in 0..PIXELS {
-            arr[i] = count;
+            cellular_state[i] = rng.gen();
         }
-        count = (count + 1) % 255;
-        beacon_states.push(arr);
+        // convert everything to values between 0 and 255
+        let mut frame : [u8; PIXELS] = [0; PIXELS]; 
+        for i in 0..PIXELS {
+            frame[i] = real_to_int_map(cellular_state[i]);
+        }
+        frames.push(frame);
     }
 
 
@@ -44,7 +65,7 @@ fn main() {
     let mut encoder = Encoder::new(&mut image, WIDTH, HEIGHT, color_map).unwrap();
     encoder.set_repeat(Repeat::Infinite).unwrap();
 
-    for state in &beacon_states {
+    for state in &frames {
         let mut frame = Frame::default();
         frame.width = WIDTH;
         frame.height = HEIGHT;
