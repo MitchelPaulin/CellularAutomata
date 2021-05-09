@@ -4,9 +4,9 @@ use std::fs::File;
 use rand::Rng;
 mod neighborhoods;
 
-const WIDTH : u16 = 500;
-const HEIGHT: u16 = 500;
-const PIXELS : usize = (WIDTH as usize) * (HEIGHT as usize);
+const WIDTH : usize = 500;
+const HEIGHT: usize = 500;
+const PIXELS : usize = WIDTH * HEIGHT;
 
 fn real_to_int_map(val: f64) -> u8{
     if val > 0.5 {
@@ -14,6 +14,10 @@ fn real_to_int_map(val: f64) -> u8{
     } else {
         0
     }
+}
+
+fn sum_values_in_neighborhood(cellular_state : &[f64; PIXELS], neighborhood : [i32; 841], cell_index : usize) -> f64 {
+    0.1
 }
 
 fn main() {
@@ -40,21 +44,29 @@ fn main() {
     let mut rng = rand::thread_rng();
 
     //initialize the states to something random
-    let mut cellular_state: [f64; PIXELS] = [0.0; PIXELS];
+    let mut cellular_state: [[f64; WIDTH]; HEIGHT] = [[0.0; WIDTH]; HEIGHT];
 
-    for i in 0..PIXELS {
-        cellular_state[i] = rng.gen();
+    for i in 0..WIDTH {
+        for j in 0..HEIGHT {
+            cellular_state[i][j] = rng.gen();
+        }
     }
 
     for _ in 1..10 {
         //simulate
-        for i in 0..PIXELS {
-            cellular_state[i] = rng.gen();
+        for i in 0..WIDTH {
+            for j in 0..HEIGHT {
+                cellular_state[i][j] = rng.gen();
+            }
         }
         // convert everything to values between 0 and 255
         let mut frame : [u8; PIXELS] = [0; PIXELS]; 
-        for i in 0..PIXELS {
-            frame[i] = real_to_int_map(cellular_state[i]);
+        let mut frame_i = 0;
+        for i in 0..WIDTH {
+            for j in 0..HEIGHT {
+                frame[frame_i] = real_to_int_map(cellular_state[i][j]);
+                frame_i += 1;
+            }
         }
         frames.push(frame);
     }
@@ -62,13 +74,13 @@ fn main() {
 
 
     let mut image = File::create("beacon.gif").unwrap();
-    let mut encoder = Encoder::new(&mut image, WIDTH, HEIGHT, color_map).unwrap();
+    let mut encoder = Encoder::new(&mut image, WIDTH as u16, HEIGHT as u16, color_map).unwrap();
     encoder.set_repeat(Repeat::Infinite).unwrap();
 
     for state in &frames {
         let mut frame = Frame::default();
-        frame.width = WIDTH;
-        frame.height = HEIGHT;
+        frame.width = WIDTH as u16;
+        frame.height = HEIGHT as u16;
         frame.buffer = Cow::Borrowed(&*state);
         encoder.write_frame(&frame).unwrap();
     }
