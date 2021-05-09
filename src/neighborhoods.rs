@@ -3,11 +3,9 @@
     Each mask is 29x29, taken from softologyblog.wordpress.com/2018/03/09/multiple-neighborhoods-cellular-automata/
 */
 
-pub mod neighborhoods {
+pub const NEIGHBORHOOD_WIDTH : usize = 29;
 
-const WIDTH : usize = 29;
-
-const neighborhood_1 : [[i32; WIDTH]; WIDTH] = [
+pub const neighborhood_1 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,7 +37,7 @@ const neighborhood_1 : [[i32; WIDTH]; WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhood_2 : [[i32; WIDTH]; WIDTH] = [
+const neighborhood_2 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,7 +69,7 @@ const neighborhood_2 : [[i32; WIDTH]; WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhood_3 : [[i32; WIDTH]; WIDTH] = [
+const neighborhood_3 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -103,7 +101,7 @@ const neighborhood_3 : [[i32; WIDTH]; WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhood_4 : [[i32; WIDTH]; WIDTH] = [
+const neighborhood_4 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
@@ -135,11 +133,9 @@ const neighborhood_4 : [[i32; WIDTH]; WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhoods : [[[i32; WIDTH]; WIDTH]; 4] = [
+const neighborhoods : [[[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH]; 4] = [
     neighborhood_1,
     neighborhood_2,
     neighborhood_3,
     neighborhood_4
 ];
-
-}

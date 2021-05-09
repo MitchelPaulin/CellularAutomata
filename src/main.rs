@@ -1,14 +1,14 @@
 use gif::{Encoder, Frame, Repeat};
+use rand::Rng;
 use std::borrow::Cow;
 use std::fs::File;
-use rand::Rng;
 mod neighborhoods;
 
-const WIDTH : usize = 500;
+const WIDTH: usize = 500;
 const HEIGHT: usize = 500;
-const PIXELS : usize = WIDTH * HEIGHT;
+const PIXELS: usize = WIDTH * HEIGHT;
 
-fn real_to_int_map(val: f64) -> u8{
+fn real_to_int_map(val: f64) -> u8 {
     if val > 0.5 {
         1
     } else {
@@ -16,7 +16,12 @@ fn real_to_int_map(val: f64) -> u8{
     }
 }
 
-fn sum_values_in_neighborhood(cellular_state : &[f64; PIXELS], neighborhood : [i32; 841], cell_index : usize) -> f64 {
+fn sum_values_in_neighborhood(
+    cellular_state: &[[f64; WIDTH]; HEIGHT],
+    neighborhood: &[[i32; neighborhoods::NEIGHBORHOOD_WIDTH]; neighborhoods::NEIGHBORHOOD_WIDTH],
+    i: usize,
+    j: usize,
+) -> f64 {
     0.1
 }
 
@@ -24,20 +29,12 @@ fn main() {
     /*
     How the color map works, each triple of values is one color R,G,B
     The first triple will be the color you get if you have a 0 for that pixel
-    The second triple will be the color you get if you have a 1 for that pixel 
-    And so on 
+    The second triple will be the color you get if you have a 1 for that pixel
+    And so on
     */
     let color_map = &[
-        0x00, 0x00, 0x80, 
-        0x00, 0xFF, 0x00, 
-        0xFF, 0xFF, 0x00, 
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0
+        0x00, 0x00, 0x80, 0x00, 0xFF, 0x00, 0xFF, 0xFF, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
 
     let mut frames = Vec::new();
@@ -60,18 +57,21 @@ fn main() {
             }
         }
         // convert everything to values between 0 and 255
-        let mut frame : [u8; PIXELS] = [0; PIXELS]; 
+        let mut frame: [u8; PIXELS] = [0; PIXELS];
         let mut frame_i = 0;
         for i in 0..WIDTH {
             for j in 0..HEIGHT {
-                frame[frame_i] = real_to_int_map(cellular_state[i][j]);
+                frame[frame_i] = real_to_int_map(sum_values_in_neighborhood(
+                    &cellular_state,
+                    &neighborhoods::neighborhood_1,
+                    i,
+                    j,
+                ));
                 frame_i += 1;
             }
         }
         frames.push(frame);
     }
-
-
 
     let mut image = File::create("beacon.gif").unwrap();
     let mut encoder = Encoder::new(&mut image, WIDTH as u16, HEIGHT as u16, color_map).unwrap();
