@@ -5,11 +5,12 @@ use std::fs::File;
 mod neighborhoods;
 
 const WIDTH: usize = 500;
-const HEIGHT: usize = 500;
+const HEIGHT: usize = 400;
 const PIXELS: usize = WIDTH * HEIGHT;
+const FRAMES: usize = 10;
 
 fn real_to_int_map(val: f64) -> u8 {
-    if val > 0.5 {
+    if val > 100. {
         1
     } else {
         0
@@ -19,10 +20,30 @@ fn real_to_int_map(val: f64) -> u8 {
 fn sum_values_in_neighborhood(
     cellular_state: &[[f64; WIDTH]; HEIGHT],
     neighborhood: &[[i32; neighborhoods::NEIGHBORHOOD_WIDTH]; neighborhoods::NEIGHBORHOOD_WIDTH],
-    i: usize,
-    j: usize,
+    cell_i: usize,
+    cell_j: usize,
 ) -> f64 {
-    0.1
+    
+    let mut sum: f64 = 0.0;
+    let offset = (neighborhoods::NEIGHBORHOOD_WIDTH / 2) as i32;
+    let cell_i = cell_i as i32;
+    let cell_j = cell_j as i32;
+    let height = HEIGHT as i32;
+    let width = WIDTH as i32;
+
+    for i in 0..neighborhoods::NEIGHBORHOOD_WIDTH {
+        for j in 0..neighborhoods::NEIGHBORHOOD_WIDTH {
+            if neighborhood[i][j] == 1 {
+                let i = cell_i + i as i32 - offset;
+                let j = cell_j + j as i32 - offset;
+                if i >= 0 && j >= 0 && i < height && j < width {
+                    sum += cellular_state[i as usize][j as usize];
+                }
+            }
+        }
+    }
+
+    return sum;
 }
 
 fn main() {
@@ -40,36 +61,40 @@ fn main() {
     let mut frames = Vec::new();
     let mut rng = rand::thread_rng();
 
-    //initialize the states to something random
+    // initialize the states to something random in [0,1)
     let mut cellular_state: [[f64; WIDTH]; HEIGHT] = [[0.0; WIDTH]; HEIGHT];
-
-    for i in 0..WIDTH {
-        for j in 0..HEIGHT {
+    for i in 0..HEIGHT {
+        for j in 0..WIDTH {
             cellular_state[i][j] = rng.gen();
         }
     }
 
-    for _ in 1..10 {
-        //simulate
-        for i in 0..WIDTH {
-            for j in 0..HEIGHT {
-                cellular_state[i][j] = rng.gen();
-            }
-        }
-        // convert everything to values between 0 and 255
-        let mut frame: [u8; PIXELS] = [0; PIXELS];
-        let mut frame_i = 0;
-        for i in 0..WIDTH {
-            for j in 0..HEIGHT {
-                frame[frame_i] = real_to_int_map(sum_values_in_neighborhood(
+    let mut next_cellular_state: [[f64; WIDTH]; HEIGHT] = [[0.0; WIDTH]; HEIGHT];
+    for frame_count in 0..FRAMES {
+        // simulate
+        for i in 0..HEIGHT {
+            for j in 0..WIDTH {
+                next_cellular_state[i][j] = sum_values_in_neighborhood(
                     &cellular_state,
                     &neighborhoods::neighborhood_1,
                     i,
                     j,
-                ));
+                );
+            }
+        }
+        cellular_state = next_cellular_state;
+
+        // convert cellular state to a frame
+        let mut frame: [u8; PIXELS] = [0; PIXELS];
+        let mut frame_i = 0;
+        for i in 0..HEIGHT {
+            for j in 0..WIDTH {
+                frame[frame_i] = real_to_int_map(cellular_state[i][j]);
                 frame_i += 1;
             }
         }
+
+        println!("Done frame {}/{}", frame_count + 1, FRAMES);
         frames.push(frame);
     }
 
