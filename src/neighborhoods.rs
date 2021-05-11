@@ -37,7 +37,7 @@ pub const neighborhood_1 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhood_2 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
+pub const neighborhood_2 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -69,7 +69,7 @@ const neighborhood_2 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhood_3 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
+pub const neighborhood_3 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -101,7 +101,7 @@ const neighborhood_3 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhood_4 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
+pub const neighborhood_4 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
@@ -133,7 +133,7 @@ const neighborhood_4 : [[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const neighborhoods : [[[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH]; 4] = [
+pub const neighborhoods : [[[i32; NEIGHBORHOOD_WIDTH]; NEIGHBORHOOD_WIDTH]; 4] = [
     neighborhood_1,
     neighborhood_2,
     neighborhood_3,
