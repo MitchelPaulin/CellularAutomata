@@ -12,7 +12,7 @@ const FRAME_REPEAT: usize = 1;
 const NUDGE_VALUE: f32 = 0.1;
 
 fn real_to_int_map(val: f32) -> u8 {
-    return (val * 255.) as u8;
+    (val * 255.) as u8
 }
 
 fn bound_value(val: f32) -> f32 {
@@ -21,7 +21,7 @@ fn bound_value(val: f32) -> f32 {
     } else if val < 0. {
         return 0.;
     }
-    return val;
+    val
 }
 
 fn sum_values_in_neighborhood(
@@ -49,7 +49,7 @@ fn sum_values_in_neighborhood(
         }
     }
 
-    return sum;
+    sum
 }
 
 fn main() {
@@ -151,7 +151,7 @@ fn main() {
                     i,
                     j,
                 );
-                if result >= 10. && result <= 13. {
+                if (10. ..=13.).contains(&result) {
                     delta += NUDGE_VALUE;
                 }
                 result = sum_values_in_neighborhood(
@@ -160,7 +160,7 @@ fn main() {
                     i,
                     j,
                 );
-                if result >= 9. && result <= 21. {
+                if (9. ..=21.).contains(&result) {
                     delta -= NUDGE_VALUE;
                 }
                 result = sum_values_in_neighborhood(
@@ -169,7 +169,7 @@ fn main() {
                     i,
                     j,
                 );
-                if result >= 78. && result <= 89. {
+                if (78. ..=89.).contains(&result) {
                     delta -= NUDGE_VALUE;
                 } else if result >= 108. {
                     delta -= NUDGE_VALUE;
